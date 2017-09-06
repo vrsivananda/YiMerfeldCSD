@@ -1,0 +1,86 @@
+close all;
+
+%========================
+%====Parameters Start====
+%========================
+
+%Set how many trials we would like to use
+plotRange = 15:5:100;
+nDataSets = 2;
+subject = 'siva';
+
+%======================
+%====Parameters End====
+%======================
+
+%Preallocate the arrays to store the end variables
+finalMu = nan(length(plotRange),nDataSets);
+finalSigma = nan(length(plotRange),1);
+finalK = nan(length(plotRange),1);
+
+%Preallocate the arrays to store the end variables
+initialMu = nan(length(plotRange),1);
+initialSigma = nan(length(plotRange),1);
+initialK = nan(length(plotRange),1);
+
+%For loop for each of the datasets
+for i = 1:nDatasets
+    
+    filename = [subject 'Data' num2str(i) '.xls'];
+    
+    
+    
+    %For loop for each iteration of the plot range
+    counter = 1;
+    for j = plotRange
+        close all;
+        
+        % Returns the parameters after the maximation of log likelohood in the
+        % form [finalMu, finalSigma, finalK]
+        muSigmaK = oneSubjectnTrialsCSD(filename, j);
+        
+        %Parse it out and store it in our array store
+        initialMu(counter,1)    = muSigmaK(1);
+        initialSigma(counter,1) = muSigmaK(2);
+        initialK(counter,1)     = muSigmaK(3);
+        
+        finalMu(counter,1)      = muSigmaK(4);
+        finalSigma(counter,1)   = muSigmaK(5);
+        finalK(counter,1)       = muSigmaK(6);
+        
+        %Increment counter
+        counter = counter + 1;
+    end
+    
+end %End of for loop for each dataset
+
+%Plot all the mu, sigmas, and Ks
+%Loop to plot all the data in their respective graphs
+
+for i = 1:nDatasets
+    
+    figure;
+    plot(plotRange, finalMu);
+    ylabel('final Mu');
+    xlabel('Number of trials');
+    title('optimized Mu');
+    xlim([0, plotRange(end)]);
+    ylim([-0.5, 0.5]);
+    
+    figure;
+    plot(plotRange, finalSigma);
+    ylabel('final Sigma');
+    xlabel('Number of trials');
+    title('optimized Sigma');
+    xlim([0 plotRange(end)]);
+    ylim([0, 0.5]);
+    
+    figure;
+    plot(plotRange, finalK);
+    ylabel('final K');
+    xlabel('Number of trials');
+    title('optimized K');
+    xlim([0, plotRange(end)]);
+    ylim([0, 10.1]);
+    
+end %End of for loop for each dataset

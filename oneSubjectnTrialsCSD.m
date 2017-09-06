@@ -115,7 +115,7 @@ function output = oneSubjectnTrialsCSD(filename, nTrials)
     %This gets us around the problem where some variables need to be fixed (the 
     %original mu, sigma,and k) and others need to be changed to be optimized 
     %(those in x0).
-    f = @(x) stepsFtoH(x,mu,sigma,confidence,binLimits,coherence);
+    f = @(x) stepsFtoH(x,confidence,binLimits,coherence);
 
 
     % ==============================================
@@ -126,8 +126,10 @@ function output = oneSubjectnTrialsCSD(filename, nTrials)
     finalMu = finalX(1);
     finalSigma = finalX(2);
     finalK = finalX(3);
+    
+    % ==============================================
 
-    output = [finalMu, finalSigma, finalK];
+    output = [mu, sigma, k, finalMu, finalSigma, finalK];
    
 
 end

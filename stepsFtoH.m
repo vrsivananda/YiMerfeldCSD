@@ -1,4 +1,4 @@
-function output = stepsFtoH(x,mu,sigma,confidence,binLimits, coherence)
+function output = stepsFtoH(x,confidence,binLimits, coherence)
     
     guessMu = x(1);
     guessSigma = x(2);
@@ -28,9 +28,9 @@ function output = stepsFtoH(x,mu,sigma,confidence,binLimits, coherence)
         %below? (Makes sense to not do it there since it is for the "fitted
         %psychometric function"))
         % Lower limits
-       decisionVariableLimits(i,1) = inverseCumulativeGaussian([guessMu, guessK*guessSigma],binLimits(i,1)); 
+       decisionVariableLimits(i,1) = inverseCumulativeGaussian([0, guessK*guessSigma],binLimits(i,1)); 
        % Upper limits
-       decisionVariableLimits(i,2) = inverseCumulativeGaussian([guessMu, guessK*guessSigma],binLimits(i,2));
+       decisionVariableLimits(i,2) = inverseCumulativeGaussian([0, guessK*guessSigma],binLimits(i,2));
 
        %[askBrian] Do we need this bound? (Probably not)
        %Values that are < -1 or > 1 are meaningless (i.e. coherence cannot be
@@ -67,8 +67,8 @@ function output = stepsFtoH(x,mu,sigma,confidence,binLimits, coherence)
         XjUpper = decisionVariableLimits(i,2);
 
         %Calculate the upper and lower bound probabilities
-        UpperLimitProbability = cumulativeGaussian(XjUpper,[Sj+mu, sigma]);
-        LowerLimitProbability = cumulativeGaussian(XjLower,[Sj+mu, sigma]);
+        UpperLimitProbability = cumulativeGaussian(XjUpper,[Sj+guessMu, guessSigma]);
+        LowerLimitProbability = cumulativeGaussian(XjLower,[Sj+guessMu, guessSigma]);
 
         %Calculate the probability for that interval and store it in the
         %likelihood array
