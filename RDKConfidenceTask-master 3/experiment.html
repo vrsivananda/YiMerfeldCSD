@@ -61,6 +61,9 @@
 		var currentStepDirection; //Global variable to hold the current step direction
 		var stepStreakCounter = 0; //Counter for streaks of steps in the same direction
 		var stepSizeJustDoubled = false;
+        
+        //For debugging purposes
+        var trialCounter = 0; //[sivaHack]
 		
 		
 		//Prototype of a trial to be modified in the functions based on what is needed
@@ -374,7 +377,7 @@
 						
 						//Add the decision to the data object
 						jsPsych.data.addDataToLastTrial({correct: isCorrect});
-						console.log(" ^ Last trial correct: " + isCorrect);
+						//[sivaHack]console.log(" ^ Last trial correct: " + isCorrect);
 					}
 				};
 				
@@ -579,7 +582,10 @@
 		//Function to decide on the coherent direction
 		function staircase(){
 			
-			console.log("-----------------------------");
+			console.log("--------"); //[sivaHack]
+            
+            trialCounter++;//[sivaHack]
+            console.log("Trial: " + trialCounter); //[sivaHack]
 			
 			//Only run these if it is not the first trial
 			if (!firstTrial){
@@ -604,7 +610,7 @@
 				firstTrial = false;
 			}//End of if(!firstTrial)
 			
-			console.log("currentCoherence in staircase() is " + currentCoherence);
+			//console.log("currentCoherence in staircase() is " + currentCoherence); [sivaHack]
 			//Return the currentCoherence into the trial
 			return currentCoherence; 
 			
@@ -683,7 +689,7 @@
 				reversal = (previousStepDirection == currentStepDirection) ? false : true;
 			}
 			
-			console.log("reversal: " + reversal);
+			//[sivaHack]console.log("reversal: " + reversal);
 			
 			//If current step is a reversal of the previous step
 			if(reversal){
@@ -702,7 +708,7 @@
 				
 				//Half the step size everytime it reverses [Rule 1]
 				halveStepSize();
-				console.log("step size halved.");
+				//[sivaHack]console.log("step size halved.");
 				
 				//Step size did not double, so we reset it back to false (this variable is used below in the else statement)
 				stepSizeJustDoubled = false;
@@ -717,12 +723,12 @@
 				if (stepStreakCounter >= stepThreshold){
 					doubleStepSize();
 					stepSizeJustDoubled = true;
-					console.log("step size doubled.");
+					//[sivaHack]console.log("step size doubled.");
 				}
 				//Else step size did not double
 				else{
 					stepSizeJustDoubled = false;
-					console.log("step size remained the same because not hit threshold yet")
+					//[sivaHack]console.log("step size remained the same because not hit threshold yet")
 				}
 				
 				//If we go in the same direction, we stay with the same step size [Rule 2]
@@ -730,7 +736,7 @@
 				
 			}//End of else (not reversal)
 			
-			console.log("New step size = " + currentStepSize);
+			//[sivaHack]console.log("New step size = " + currentStepSize);
 			
 		}//End of changeStepSizePEST
 		

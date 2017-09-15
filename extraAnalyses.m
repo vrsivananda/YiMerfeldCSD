@@ -7,15 +7,16 @@ function extraAnalyses(subject,nDataSets)
     plotRange = 1:100;
     
     %Create stores for the variables
-    unsignedCoherenceStore = nan(numel(plotRange),nDataSets);
-    frameRateStore = nan(numel(plotRange),nDataSets);
+    unsignedCoherenceStore  = nan(numel(plotRange),nDataSets);
+    frameRateStore          = nan(numel(plotRange),nDataSets);
+    numberOfFramesStore     = nan(numel(plotRange),nDataSets);
   
     
     for i = 1:nDataSets
         
         %The filename for this dataset/ this experiment run
-        %filename = [subject 'Data' num2str(i) '_400ms.xls']; %[need to change to i]
-        filename = 'sivaData1_200ms.xls';
+        filename = [subject 'Data' num2str(i) '.xls']; %[need to change to i]
+        %filename = 'sivaData2.xls';
         %Read in the data from the file
         allData = xlsread(filename);
         
@@ -43,7 +44,7 @@ function extraAnalyses(subject,nDataSets)
         
         %===Number of Frames===
         %Get all data in the number_of_frames column
-        numberOfFrames = allData(:,26);
+        numberOfFrames = allData(:,27);
         %Only get the trials where there is a valid frame rate
         numberOfFrames = numberOfFrames(~isnan(numberOfFrames));
         %Delete the practice trials
@@ -86,9 +87,9 @@ function extraAnalyses(subject,nDataSets)
         plot(plotRange, frameRateStore(:,i), 'MarkerSize', 12, 'Marker', '.', 'LineWidth', 1);
         ylabel('average ms/frame');
         xlabel('Trial number');
-        title('Average frame rate per trial');
+        title('Average time per frame');
         xlim([0, 100]);
-        ylim([14, 35]);
+        ylim([0, 30]);
         hold on;
     end
     legend(dataLegend);
