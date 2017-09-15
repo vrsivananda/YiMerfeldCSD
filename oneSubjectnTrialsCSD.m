@@ -5,45 +5,48 @@ function output = oneSubjectnTrialsCSD(filename, nTrials)
 
     %Read in the data from the file
     allData = xlsread(filename);
-
+    
+    %Get all data in the coherence column
     coherence = allData(:,14);
+    %Get all the data in the coherent_direction column
     coherent_direction = allData(:,13);
+    
     % Get the indexes of those which are going left
     indexLeftDirection = (coherent_direction == 180);
     % Convert the coherences to negative if they are going left
     coherence(indexLeftDirection) = -(coherence(indexLeftDirection));
+    
     % Get the indexes of the RDK trials
     indexRDK = ~isnan(coherence);
-
     %Distill the coherence out
     coherence = coherence(indexRDK);
     %Delete the practice trials
     coherence(1:10,:) = [];
 
     %Get the indexes of the similarity trials
-    indexSimilarity = ~isnan(allData(:,26));
+    indexSimilarity = ~isnan(allData(:,27));
     %Distill the sim_score out
-    sim_score = allData(indexSimilarity,26);
+    sim_score = allData(indexSimilarity,27);
     %Delete the practice trials
     sim_score(1:10,:) = [];
 
     %Get the index of those that are chosen right
     rightChoice = (sim_score > 50);
-    
+
 
     %Truncate the data based on how many trials there are
     rightChoice = rightChoice(1:nTrials,1);
     coherence = coherence(1:nTrials, 1);
     sim_score = sim_score(1:nTrials, 1);
-    
+
     %Convert the confidence into percentage (y-axis)
     confidence = sim_score./100;
 
-    
-    % ==============================================
-    % Step B: 
 
-    %[mean1, slope1, guessRate1, lapseRate1] 
+    % ==============================================
+    % Step B:
+
+    %[mean1, slope1, guessRate1, lapseRate1]
     % disp('-------------------------------------');
     % disp('Psychometric function on binomial data with free lapse and guess rates:');
     % disp('    mean      slope      guess      lapse');
@@ -55,7 +58,11 @@ function output = oneSubjectnTrialsCSD(filename, nTrials)
     disp('-------------------------------------');
     disp('Psychometric function on binomial data with 0 guess and 0 lapse rates:');
     disp('    mean      slope');
+    %Fitting to binary forced choice data:
     parameters2 = psychometricFit2Parameters(coherence,rightChoice,0,0,0);
+    %Fitting to confidence judgment data: 
+    %(Probably incorrect because k will just be 1)
+    %parameters2 = psychometricFit2Parameters(coherence,confidence,0,0,0);
     disp(parameters2);
 
     %Store what we need in variables
@@ -64,7 +71,7 @@ function output = oneSubjectnTrialsCSD(filename, nTrials)
     sigma = 1/slope;
 
     % ==============================================
-    % Step C: 
+    % Step C:
 
     %This is irrelevant as only k will be the free parameter
     % disp('-------------------------------------');
@@ -84,7 +91,7 @@ function output = oneSubjectnTrialsCSD(filename, nTrials)
     k = parameters4;
 
     % ==============================================
-    % Step D: 
+    % Step D:
 
     %Preallocate for matrix to hold lower bin limit (col 1) and uper bin limit
     %(col 2)
@@ -96,40 +103,36 @@ function output = oneSubjectnTrialsCSD(filename, nTrials)
 
 
     % ==============================================
-    % Step E: 
+    % Step E:
 
     %Assignment has been done above in step C.
     % mu sigma k
-
-
-    % ==============================================
-    % Return the initial values in an array
 
     %The initial guessing values for fmincon, to be varied
     x0 = [mu, sigma, k]
 
     % ==============================================
-    % Steps F to H: 
+    % Steps F to H:
 
     %Create an anonymous function to be used in fmincon
-    %This gets us around the problem where some variables need to be fixed (the 
-    %original mu, sigma,and k) and others need to be changed to be optimized 
+    %This gets us around the problem where some variables need to be fixed (the
+    %original mu, sigma,and k) and others need to be changed to be optimized
     %(those in x0).
     f = @(x) stepsFtoH(x,confidence,binLimits,coherence);
 
 
     % ==============================================
-    % Step G
+    % Step I
     %[finalX,fval, exitflag, output, lambda, grad, hessian] = fmincon(f,x0,[],[],[],[],[-0.5 0 0],[0.5 3 30]);
     finalX = fminsearchbnd(f,x0,[-0.5 0 0],[0.5,3,10],opts);
 
     finalMu = finalX(1);
     finalSigma = finalX(2);
     finalK = finalX(3);
-    
+
     % ==============================================
 
     output = [mu, sigma, k, finalMu, finalSigma, finalK];
-   
+
 
 end

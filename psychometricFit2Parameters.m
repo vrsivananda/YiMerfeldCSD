@@ -11,8 +11,8 @@ function output = psychometricFit2Parameters(x,y,subjNum,condition,save)
     %   y  =     gamma+(1-gamma-lambda)*0.5*erfc(-beta.*(x-alpha)./sqrt(2));
     psyFit = @(p,a) 0.5*(erfc((-p(2)).*(a-p(1))./sqrt(2)));
     
-    %Get an estimate of the parameters from the function and guess valuese
-    pEst = nlinfit(x,y,psyFit,[0.5, 1]);
+    %Get an estimate of the parameters from the function and guess values
+    pEst = nlinfit(x,y,psyFit,[0, 1]);
     %Create detailed points of x for smooth sigmoid curve
     newX = linspace(-1,1,40);
     %Make an long array of estimated y values based on the parameters above

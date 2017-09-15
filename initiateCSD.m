@@ -6,7 +6,7 @@ close all;
 
 %Set how many trials we would like to use
 plotRange = 15:5:100;
-nDataSets = 6;
+nDataSets = 1;
 subject = 'siva';
 
 %======================
@@ -29,7 +29,7 @@ initialK = nan(length(plotRange),nDataSets);
 for i = 1:nDataSets
     
     %The filename for this dataset/ this experiment run
-    filename = [subject 'Data' num2str(i) '.xls'];
+    filename = [subject 'Data' num2str(i) '_400ms.xls'];
     
     %========================================
     %For loop for each iteration of the plot range
@@ -38,7 +38,7 @@ for i = 1:nDataSets
         close all;
         
         % Returns the parameters after the maximation of log likelohood in the
-        % form [finalMu, finalSigma, finalK]
+        % form [initialMu, initialSigma, initialK, finalMu, finalSigma, finalK]
         muSigmaK = oneSubjectnTrialsCSD(filename, j);
         
         %Parse it out and store it in our array store
