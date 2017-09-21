@@ -5,17 +5,20 @@ function extraAnalyses(subject,nDataSets)
 
 
     plotRange = 1:100;
+    axisLabelSize = 6;
+    tickSize = 28;
     
     %Create stores for the variables
-    unsignedCoherenceStore = nan(numel(plotRange),nDataSets);
-    frameRateStore = nan(numel(plotRange),nDataSets);
+    unsignedCoherenceStore  = nan(numel(plotRange),nDataSets);
+    frameRateStore          = nan(numel(plotRange),nDataSets);
+    numberOfFramesStore     = nan(numel(plotRange),nDataSets);
   
     
-    for i = 1:nDataSets
+    for i = [3,4]%[sivaHack]1:nDataSets
         
         %The filename for this dataset/ this experiment run
-        filename = [subject 'Data' num2str(i) '_400ms.xls']; %[need to change to i]
-
+        filename = [subject 'Data' num2str(i) '.xls'];
+        %filename = 'sivaData2.xls';
         %Read in the data from the file
         allData = xlsread(filename);
         
@@ -41,16 +44,16 @@ function extraAnalyses(subject,nDataSets)
         %Store the frame rate in the store
         frameRateStore(:,i) = frameRate;
         
-        %===Number ===
-        %Get all data in the frame_rate column
-        frameRate = allData(:,25);
+        %===Number of Frames===
+        %Get all data in the number_of_frames column
+        numberOfFrames = allData(:,27);
         %Only get the trials where there is a valid frame rate
-        frameRate = frameRate(~isnan(frameRate));
+        numberOfFrames = numberOfFrames(~isnan(numberOfFrames));
         %Delete the practice trials
-        frameRate(1:10,:) = [];
+        numberOfFrames(1:10,:) = [];
         %Store the frame rate in the store
-        frameRateStore(:,i) = frameRate;
-
+        numberOfFramesStore(:,i) = numberOfFrames;
+        
         
     
     end %End of for loop to go through data sets
@@ -81,37 +84,48 @@ function extraAnalyses(subject,nDataSets)
     
     %Plot for frameRate
     figure;
-    for i = 1:nDataSets
+    for i = [3,4]%[sivaHack]1:nDataSets
         %Plot the data
         plot(plotRange, frameRateStore(:,i), 'MarkerSize', 12, 'Marker', '.', 'LineWidth', 1);
-        ylabel('average ms/frame');
-        xlabel('Trial number');
-        title('Average frame rate per trial');
+        ylabel({'Average milliseconds per frame',''}, 'FontSize', axisLabelSize);
+        xlabel({'','Trial number'}, 'FontSize', axisLabelSize);
+        xLabel = get(gca, 'Xlabel'); %Get the x label
+        xLabelFontSize = get(xLabel,'FontSize'); %Store the label font size
+        xTicks = get(gca, 'XAxis'); %Get the Xaxis 
+        yTicks = get(gca, 'YAxis'); %Get the Xaxis 
+        set(xTicks, 'FontSize', tickSize); % Set the Xaxis font size
+        set(yTicks, 'FontSize', tickSize); % Set the Yaxis font size
+        set(xLabel, 'FontSize', xLabelFontSize); %Restore the label font size
+        %[sivaHack]title('Average time per frame');
         xlim([0, 100]);
-        ylim([14, 35]);
+        ylim([0, 30]);
         hold on;
     end
-    legend(dataLegend);
+    %[sivaHack]legend(dataLegend);
+    legend({'Google Chrome - Ubuntu','Google Chrome - OSX'});
     %Add in the line for the ideal frameRate
     idealFrameRate = 1000/60;
     line([plotRange(1), plotRange(end)], [idealFrameRate, idealFrameRate], 'LineStyle', '--', 'Color', 'k', 'LineWidth', 2);
     
     %Plot for numberOfFrames
     figure;
-    for i = 1:nDataSets
+    for i = [3,4]%[sivaHack]1:nDataSets
         %Plot the data
-        plot(plotRange, frameRateStore(:,i), 'MarkerSize', 12, 'Marker', '.', 'LineWidth', 1);
-        ylabel('average ms/frame');
-        xlabel('Trial number');
-        title('Average frame rate per trial');
+        plot(plotRange, numberOfFramesStore(:,i), 'MarkerSize', 12, 'Marker', '.', 'LineWidth', 1);
+        ylabel({'Number of frames',''}, 'FontSize', axisLabelSize);
+        xlabel({'','Trial number'}, 'FontSize', axisLabelSize);
+        get(gca, 'XTick');
+        set(gca, 'FontSize', tickSize);
+        %[sivaHack]title('Number of frames per trial');
         xlim([0, 100]);
-        ylim([14, 35]);
+        ylim([0, 30]);
         hold on;
     end
-    legend(dataLegend);
-    %Add in the line for the ideal frameRate
-    idealFrameRate = 1000/60;
-    line([plotRange(1), plotRange(end)], [idealFrameRate, idealFrameRate], 'LineStyle', '--', 'Color', 'k', 'LineWidth', 2);
+    %[sivaHack]legend(dataLegend);
+    legend({'Google Chrome - Ubuntu','Google Chrome - OSX'});
+    %Add in the line for the ideal numberOfFrames
+    idealNumberOfFrames = 60 * 0.2; %fps * s
+    line([plotRange(1), plotRange(end)], [idealNumberOfFrames, idealNumberOfFrames], 'LineStyle', '--', 'Color', 'k', 'LineWidth', 2);
 
 
 end

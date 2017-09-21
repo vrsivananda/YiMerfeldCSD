@@ -6,8 +6,8 @@ close all;
 
 %Set how many trials we would like to use
 plotRange = 15:5:100;
-nDataSets = 1;
-subject = 'siva';
+nDataSets = 6;
+subject = 'brian';
 
 %======================
 %====Parameters End====
@@ -29,7 +29,7 @@ initialK = nan(length(plotRange),nDataSets);
 for i = 1:nDataSets
     
     %The filename for this dataset/ this experiment run
-    filename = [subject 'Data' num2str(i) '_400ms.xls'];
+    filename = [subject 'Data' num2str(i) '.xls'];
     
     %========================================
     %For loop for each iteration of the plot range
