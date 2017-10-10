@@ -1,5 +1,8 @@
 close all;
 
+cd ('/Users/cml2/Desktop/YiMerfeld Master Folder')
+path = pwd;
+
 %========================
 %====Parameters Start====
 %========================
@@ -7,7 +10,7 @@ close all;
 %Set how many trials we would like to use
 plotRange = 15:5:100;
 nDataSets = 6;
-subject = 'brian';
+subject = 'subject4';
 
 %======================
 %====Parameters End====
@@ -29,7 +32,7 @@ initialK = nan(length(plotRange),nDataSets);
 for i = 1:nDataSets
     
     %The filename for this dataset/ this experiment run
-    filename = [subject 'Data' num2str(i) '.xls'];
+    filename = [path '/data/' subject 'Data' num2str(i) '.xls'];
     
     %========================================
     %For loop for each iteration of the plot range

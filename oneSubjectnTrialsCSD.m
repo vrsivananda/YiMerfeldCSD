@@ -24,9 +24,9 @@ function output = oneSubjectnTrialsCSD(filename, nTrials)
     coherence(1:10,:) = [];
 
     %Get the indexes of the similarity trials
-    indexSimilarity = ~isnan(allData(:,27));
+    indexSimilarity = ~isnan(allData(:,28));
     %Distill the sim_score out
-    sim_score = allData(indexSimilarity,27);
+    sim_score = allData(indexSimilarity,28);
     %Delete the practice trials
     sim_score(1:10,:) = [];
 

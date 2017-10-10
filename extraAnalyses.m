@@ -14,12 +14,15 @@ function extraAnalyses(subject,nDataSets)
     unsignedCoherenceStore  = nan(numel(plotRange),nDataSets);
     frameRateStore          = nan(numel(plotRange),nDataSets);
     numberOfFramesStore     = nan(numel(plotRange),nDataSets);
+    
+    cd ('/Users/cml2/Desktop/YiMerfeld Master Folder')
+    path = pwd;
   
     
     for i = 1:nDataSets
         
         %The filename for this dataset/ this experiment run
-        filename = [subject 'Data' num2str(i) '.xls'];
+        filename = [path,'/data/', subject 'Data' num2str(i) '.xls'];
         %filename = 'sivaData6.xls';
         %Read in the data from the file
         allData = xlsread(filename);
