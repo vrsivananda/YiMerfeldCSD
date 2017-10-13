@@ -3,6 +3,7 @@ close all;
 cd ('/Users/cml2/Desktop/YiMerfeld Master Folder')
 path = pwd;
 
+
 %========================
 %====Parameters Start====
 %========================
@@ -10,7 +11,7 @@ path = pwd;
 %Set how many trials we would like to use
 plotRange = 15:5:100;
 nDataSets = 6;
-subject = 'subject4';
+subject = ['subject' num2str(xxx)];
 
 %======================
 %====Parameters End====
@@ -263,7 +264,7 @@ xlim([0, plotRange(end)]);
 ylim([0, 1]);
 legend('show');
 
-%Sumary SD for Sigma
+%Summary SD for Sigma
 figure;
 %Conventional Psychometric Fit
 plot(plotRange, sdInitialSigma, 'LineWidth', 3, 'Color', 'k', 'DisplayName', 'Initial Sigma');
@@ -277,3 +278,7 @@ title('SD Sigma\_cap');
 xlim([0, plotRange(end)]);
 ylim([0, 1]);
 legend('show');
+
+%========================================
+%Save all the variables
+save(['data/' subject],'finalK','finalMu','finalSigma','initialK','initialMu','initialSigma')
