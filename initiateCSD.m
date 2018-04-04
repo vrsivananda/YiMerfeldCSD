@@ -11,7 +11,9 @@ path = pwd;
 %Set how many trials we would like to use
 plotRange = 15:5:100;
 nDataSets = 6;
-subject = ['subject' num2str(xxx)];
+subject = ['subject' num2str(1)];
+legendFontSize = 25;
+tickFontSize = 20;
 
 %======================
 %====Parameters End====
@@ -170,54 +172,68 @@ sdLowerFinalK = meanFinalK - sdFinalK;
 %Plot the summary Mu
 figure;
 %Conventional Psychometric Fit
-plot(plotRange, meanInitialMu, 'LineWidth', 3, 'Color', 'k', 'DisplayName', 'Initial Mean');
+plot(plotRange, meanInitialMu, 'LineWidth', 3, 'Color', 'k', 'DisplayName', 'Psy');
 hold on;
-plot(plotRange, sdUpperInitialMu, 'LineWidth', 1, 'Color', 'k', 'DisplayName', 'Initial SD');
+h = plot(plotRange, sdUpperInitialMu, 'LineWidth', 1, 'Color', 'k');
+set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off');%Turn off the legend for the SD line
 hold on;
 h = plot(plotRange, sdLowerInitialMu, 'LineWidth', 1, 'Color', 'k');
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off');%Turn off the legend for the extra SD line
 hold on;
 %CSD
-plot(plotRange, meanFinalMu, 'LineWidth', 3, 'Color', 'r', 'DisplayName', 'Final Mean');
+plot(plotRange, meanFinalMu, 'LineWidth', 3, 'Color', 'r', 'DisplayName', 'CSD');
 hold on;
-plot(plotRange, sdUpperFinalMu, 'LineWidth', 1, 'Color', 'r', 'DisplayName', 'Final SD');
+h = plot(plotRange, sdUpperFinalMu, 'LineWidth', 1, 'Color', 'r');
+set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off');%Turn off the legend for the SD line
 hold on;
 h = plot(plotRange, sdLowerFinalMu, 'LineWidth', 1, 'Color', 'r');
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off');%Turn off the legend for the extra SD line
 hold off;
 %Formatting
-ylabel('Mu\_cap');
-xlabel('Number of trials');
-title('Summary Mu\_cap');
+%ylabel('Mu\_cap');
+%xlabel('Number of trials');
+%title('Summary Mu\_cap');
+xTicks = get(gca, 'XAxis'); %Get the Xaxis
+yTicks = get(gca, 'YAxis'); %Get the Xaxis
+set(xTicks, 'FontSize', tickFontSize); % Set the Xaxis font size
+set(yTicks, 'FontSize', tickFontSize); % Set the Yaxis font size
 xlim([0, plotRange(end)]);
 ylim([-1, 1]);
-legend('show');
+legendObject = legend('show');
+legendObject.FontSize = legendFontSize;
 
 %Plot the summary Sigma
 figure;
 %Conventional Psychometric Fit
-plot(plotRange, meanInitialSigma, 'LineWidth', 3, 'Color', 'k', 'DisplayName', 'Initial Mean');
+plot(plotRange, meanInitialSigma, 'LineWidth', 3, 'Color', 'k', 'DisplayName', 'Psy');
 hold on;
-plot(plotRange, sdUpperInitialSigma, 'LineWidth', 1, 'Color', 'k', 'DisplayName', 'Initial SD');
+h = plot(plotRange, sdUpperInitialSigma, 'LineWidth', 1, 'Color', 'k');
+set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off');%Turn off the legend for the SD line
 hold on;
 h = plot(plotRange, sdLowerInitialSigma, 'LineWidth', 1, 'Color', 'k');
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off');%Turn off the legend for the extra SD line
 hold on;
 %CSD
-plot(plotRange, meanFinalSigma, 'LineWidth', 3, 'Color', 'r', 'DisplayName', 'Final Mean');
+plot(plotRange, meanFinalSigma, 'LineWidth', 3, 'Color', 'r', 'DisplayName', 'CSD');
 hold on;
-plot(plotRange, sdUpperFinalSigma, 'LineWidth', 1, 'Color', 'r', 'DisplayName', 'Final SD');
+h = plot(plotRange, sdUpperFinalSigma, 'LineWidth', 1, 'Color', 'r');
+set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off');%Turn off the legend for the SD line
 hold on;
 h = plot(plotRange, sdLowerFinalSigma, 'LineWidth', 1, 'Color', 'r');
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off');%Turn off the legend for the extra SD line
 hold off;
 %Formatting
-ylabel('Sigma\_cap');
-xlabel('Number of trials');
-title('Summary Sigma\_cap');
+%ylabel('Sigma\_cap');
+%xlabel('Number of trials');
+%title('Summary Sigma\_cap');
+xTicks = get(gca, 'XAxis'); %Get the Xaxis
+yTicks = get(gca, 'YAxis'); %Get the Xaxis
+set(xTicks, 'FontSize', tickFontSize); % Set the Xaxis font size
+set(yTicks, 'FontSize', tickFontSize); % Set the Yaxis font size
 xlim([0, plotRange(end)]);
 ylim([-0.5, 1.5]);
-legend('show');
+legendObject = legend('show');
+legendObject.FontSize = legendFontSize;
 
 %Plot the summary K
 figure;
@@ -230,20 +246,26 @@ figure;
 % set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off');%Turn off the legend for the extra SD line
 % hold on;
 %CSD
-plot(plotRange, meanFinalK, 'LineWidth', 3, 'Color', 'r', 'DisplayName', 'Final Mean');
+plot(plotRange, meanFinalK, 'LineWidth', 3, 'Color', 'r', 'DisplayName', 'CSD');
 hold on;
-plot(plotRange, sdUpperFinalK, 'LineWidth', 1, 'Color', 'r', 'DisplayName', 'Final SD');
+h = plot(plotRange, sdUpperFinalK, 'LineWidth', 1, 'Color', 'r');
+set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off');%Turn off the legend for the SD line
 hold on;
 h = plot(plotRange, sdLowerFinalK, 'LineWidth', 1, 'Color', 'r');
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off');%Turn off the legend for the extra SD line
 hold off;
 %Formatting
-ylabel('K\_cap');
-xlabel('Number of trials');
-title('Summary K\_cap');
+%ylabel('K\_cap');
+%xlabel('Number of trials');
+%title('Summary K\_cap');
+xTicks = get(gca, 'XAxis'); %Get the Xaxis
+yTicks = get(gca, 'YAxis'); %Get the Xaxis
+set(xTicks, 'FontSize', tickFontSize); % Set the Xaxis font size
+set(yTicks, 'FontSize', tickFontSize); % Set the Yaxis font size
 xlim([0, plotRange(end)]);
 ylim([0.5, 2.5]);
-legend('show');
+legendObject = legend('show');
+legendObject.FontSize = legendFontSize;
 
 
 %========================================

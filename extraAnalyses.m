@@ -8,7 +8,8 @@ function extraAnalyses(subject,nDataSets)
     % PARAMETERS
     plotRange = 1:100;
     axisLabelSize = 22;
-    tickSize = 15;
+    tickSize = 16;
+    legendFontSize = 18;
     
     %Create stores for the variables
     unsignedCoherenceStore  = nan(numel(plotRange),nDataSets);
@@ -70,7 +71,7 @@ function extraAnalyses(subject,nDataSets)
     %Set up the legend
     dataLegend = cell(nDataSets,1);
     for i = 1:nDataSets
-        dataLegend{i} = [subject 'Data ' num2str(i)];
+        dataLegend{i} = [' Run ' num2str(i)];
     end
     
     %Plot for unsignedCoherence
@@ -78,10 +79,9 @@ function extraAnalyses(subject,nDataSets)
     for i = 1:nDataSets
         %Plot the data
         plot(plotRange, unsignedCoherenceStore(:,i), 'MarkerSize', 12, 'Marker', '.', 'LineWidth', 2);
-        title('Staircase Coherence');
-        ylabel('Coherence');
-        xlabel('Trial number');
-        
+        %title('Staircase Coherence');
+        %ylabel('Coherence');
+        %xlabel('Trial number');
         xLabel = get(gca, 'Xlabel'); %Get the x label
         xLabelFontSize = get(xLabel,'FontSize'); %Store the Xlabel font size
         yLabel = get(gca, 'Ylabel'); %Get the y label
@@ -97,7 +97,8 @@ function extraAnalyses(subject,nDataSets)
         ylim([0, 1.0]);
         hold on;
     end
-    legend(dataLegend);
+    legendObject = legend(dataLegend);
+    legendObject.FontSize = legendFontSize;
     
     %Plot for frameRate
     figure;

@@ -1,6 +1,6 @@
-% p(1) = alpha  = bias / mean / threshold / PSE
-% p(2) = beta   = slope = 1/sigma
-% p(3) = k = scaling factor
+% alpha  = bias / mean / threshold / PSE
+% beta   = slope = 1/sigma
+% p(1)   = k = scaling factor
 % gamma  = guess rate = 0
 % lambda = lapse rate = 0
 
@@ -8,7 +8,6 @@ function output = psychometricFit1Parameter(x,y,alpha,beta,subjNum,condition,sav
     %hold the previous figure
     figure;
 
-    %psyFit = @(p,a) 0.5*(erfc((a-p(1))/(p(2)*sqrt(2))));
     %   y  =        0.5*(erfc(-((1/k)   .*beta).*(x-alpha)./sqrt(2)));
     psyFit = @(p,a) 0.5*(erfc(-((1/p(1)).*beta).*(a-alpha)./sqrt(2)));
     
