@@ -1,6 +1,6 @@
 % To conduct a meta-analyses on all the subject's data
 
-cd ('/Users/cml2/Desktop/YiMerfeld Master Folder')
+cd ('/Users/cml2/Desktop/YiMerfeldCSD')
 path = pwd;
 
 subject1 = load([path '/data/subject1']);

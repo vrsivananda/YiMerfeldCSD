@@ -1,6 +1,6 @@
 close all;
 
-cd ('/Users/cml2/Desktop/YiMerfeld Master Folder')
+cd ('/Users/cml2/Desktop/YiMerfeldCSD')
 path = pwd;
 
 
