@@ -1,5 +1,6 @@
 function extraAnalyses(subject,nDataSets)
     %This function analyzes and plots:
+    % -endingCoherence (no plot)
     % -coherence staircase
     % -frame rate
     % -number of frames
@@ -14,6 +15,7 @@ function extraAnalyses(subject,nDataSets)
     legendFontSize = 18;
     
     %Create stores for the variables
+    endingCoherenceStore    = nan(1,nDataSets);
     unsignedCoherenceStore  = nan(numel(plotRange),nDataSets);
     frameRateStore          = nan(numel(plotRange),nDataSets);
     numberOfFramesStore     = nan(numel(plotRange),nDataSets);
@@ -30,6 +32,9 @@ function extraAnalyses(subject,nDataSets)
         %Read in the data from the file
         allData = xlsread(filename);
         
+        
+        %===Unsigned Coherence===
+        endingCoherenceStore(i) = allData(455,14);
         
         %===Unsigned Coherence===
         %Get all data in the coherence column (unsigned because we will not

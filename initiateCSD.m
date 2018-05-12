@@ -11,7 +11,7 @@ path = pwd;
 %Set how many trials we would like to use
 plotRange = 15:5:100;
 nDataSets = 6;
-subject = ['subject' num2str(1)];
+subject = ['subject' num2str(2)];
 legendFontSize = 25;
 tickFontSize = 20;
 
