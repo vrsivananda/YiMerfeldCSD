@@ -33,7 +33,7 @@ initialK = nan(length(plotRange),nDataSets);
 
 %For loop for each of the datasets
 for i = 1:nDataSets
-    
+    i = 2
     %The filename for this dataset/ this experiment run
     filename = [path '/data/' subject 'Data' num2str(i) '.xls'];
     

@@ -60,7 +60,7 @@ function output = startCSD(coherence, binaryChoice, confidence)
     %This gets us around the problem where some variables need to be fixed (the
     %original mu, sigma,and k) and others need to be changed to be optimized
     %(those in x0).
-    f = @(x) stepsFtoH(x,confidence,binLimits,coherence);
+    f = @(x) stepsFtoH(x,confidence,binLimits,coherence, sigma);%sivaHack: Sigma passed in
 
 
     % ==============================================
